@@ -1,0 +1,137 @@
+# original file by smacz  
+# Bunsen Labs Conky help threads
+# http://crunchbang.org/forums/viewtopic.php?pid=371424#p371424
+# For commands above TEXT check:
+# http://conky.sourceforge.net/config_settings.html
+# For commands available below TEXT check:
+# http://conky.sourceforge.net/variables.html
+
+# updated and customized by [icarus]
+# Betto McRose 
+
+conky.config = {
+
+  use_spacer = 'left',
+  pad_percents = 3,
+  background = false,
+  double_buffer = true,
+  font = 'Monospace:size=11',
+  use_xft = true,
+  alignment = 'top_right',
+  own_window_argb_value = 0,
+  own_window_argb_visual = true,
+  update_interval = 5.0,
+
+  own_window = true,
+  own_window_type = 'desktop',
+  own_window_transparent = true,
+  own_window_hints = undecorated,below,skip_taskbar,skip_pager,sticky,
+  own_window_colour = '000000',
+  own_window_class = Conky,
+  -- own_window_title = 'Conky customized by [icarus] / Betto McRose',
+
+  
+  maximum_width = 280,
+
+  -- ximerama_head = 0,
+
+  gap_x = right,
+  gap_y = top,
+
+  xftalpha = 1, 
+  override_utf8_locale = true,
+
+  draw_shades = false,
+  default_shade_color = '000000',
+
+  draw_outline = false,
+  default_outline_color = '000000',
+
+  default_color = 'C0C0C0', -- Silver
+  color0 = 'B0E0E6', -- PowderBlue
+  color1 = '778899', -- LightSlateGray
+  color2 = 'D8BFD8', -- Thistle
+  color3 = '9ACD32', -- YellowGreen
+  color4 = 'FFA07A', -- LightSalmon
+  color5 = 'FFDEAD', -- NavajoWhite
+  color6 = '00BFFF', -- DeepSkyBlue
+  color7 = '5F9EA0', -- CadetBlue
+  color8 = 'BDB76B', -- DarkKhaki
+  color9 = 'CD5C5C', -- IndianRed
+  
+  draw_borders = false,
+  stippled_borders = 5,
+  border_inner_margin = 5,
+  border_outer_margin = 0,
+  border_width = 2,
+  -- draw_graph_borders =  true,
+
+  use_spacer = 'none',
+
+  text_buffer_size = 6144,
+
+  no_buffers = true,
+
+  short_units = true,
+
+  pad_percents = 2,
+
+  imlib_cache_size = 0,
+
+  update_interval = 1,
+  
+}
+
+
+
+conky.text = [[
+${image ~/path-to-image/image1.png -p 0,0 -s 120x120}
+${image ~/path-to-image/image2.jpg -p 110,35 -s 90x90}
+${image ~/path-to-image/image3.gif -p 180,10 -s 90x90}
+#############################
+${voffset 55}
+${color}${alignc}S Y S T E M    I N F O
+${hr}
+#Today is:${alignr}${color #00FF40}${time %x}${color}
+User:${alignr}${color #FF8000}$USER${color}
+Host:${alignr}${color #FFFF00}${nodename}${color}
+GMT:${alignr}${color #FF4000}${time %z}${color}
+UTC:${alignr}${utime %H:%M}
+Uptime:${alignr}${uptime}
+
+${color #0080FF}${execi 1000 cat /proc/cpuinfo | grep 'model name' | sed -e 's/model name.*: //'| uniq}${color}
+$sysname #$kernel 
+${color #00FF40}$alignr$machine${color}
+Kernel: ${color green}$alignr$kernel${color}
+
+${goto 70}Used${alignr}Size
+/.. ${goto 70}${fs_used /}${alignr}${fs_size /}
+/home${goto 70}${fs_used /home/mcrose}${alignr}${fs_size /home/mcrose}
+${color #FE2E2E}~DATA${color}${goto 81}${fs_used /run/media/mcrose/DATA}${alignr}${fs_size //run/media/mcrose/DATA}
+
+#${goto 60}
+#MEM${alignr}MAX
+RAM${goto 60}${mem}${alignr}${memmax}
+Swap${goto 60}${swap}${alignr}${swapmax}
+
+CPU:${goto 60}Used${alignr}GHz
+Avg${goto 60}${if_match ${cpu cpu0}<10}  ${cpu cpu0}\
+${else}${if_match ${cpu cpu0}<100} ${cpu cpu0}\
+${else}${cpu cpu0}${endif}${endif}%${alignr}${freq_g}
+#${color slate grey}CPU:${color} $cpu% ${acpitemp}C
+${cpugraph 000000 ffffff}
+
+${alignr}TEMP
+${exec cat /sys/devices/platform/coretemp.0/hwmon/hwmon4/temp2_label}${alignr}${exec cat /sys/devices/platform/coretemp.0/hwmon/hwmon4/temp2_input | cut -c-2}°C
+${exec cat /sys/devices/platform/coretemp.0/hwmon/hwmon4/temp3_label}${alignr}${exec cat /sys/devices/platform/coretemp.0/hwmon/hwmon4/temp3_input | cut -c-2}°C
+#GPU
+
+#LAN:${goto 60}
+IP:${alignr}${addr wlp3s0}
+
+${color 339900}WiFi$color Inbound $alignr ${downspeed wlp3s0} 
+${downspeedgraph wlp3s0}
+${color 339900}WiFi$color Outbound $alignr ${upspeed wlp3s0} 
+${upspeedgraph wlp3s0}
+
+]]
